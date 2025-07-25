@@ -17,8 +17,8 @@ A pixel grid demo with thousands of tiny components provides an ideal stress‑t
 ## Technical Overview
 
 ### Techstack
-* **Angular** 17+
-* **RxJS** 7+
+* **Angular** 20+
+* **RxJS** 8+
 * **SCSS** (Angular default)
 * **Jasmine/Karma** for unit tests
 * **stats.js**-library for displaying fps

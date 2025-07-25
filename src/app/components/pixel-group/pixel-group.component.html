@@ -1,0 +1,4 @@
+<div class="pixel-group">
+  <app-pixel *ngFor="let pixel of pixels; trackBy: trackPixel" 
+             [x]="pixel.x" [y]="pixel.y"></app-pixel>
+</div>

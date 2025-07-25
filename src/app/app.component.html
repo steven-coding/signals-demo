@@ -1,0 +1,74 @@
+<app-stats></app-stats>
+
+<div class="app-container">
+  <header>
+    <h1>{{ title }}</h1>
+    <div class="controls">
+      <div class="main-controls">
+        <button (click)="toggleMode()" class="mode-toggle">
+          Current Mode: {{ currentMode() | titlecase }}
+        </button>
+        
+        <button (click)="toggleAnimation()" class="animation-toggle" 
+                [class.stopped]="!isAnimating">
+          {{ isAnimating ? 'Stop Animation' : 'Start Animation' }}
+        </button>
+      </div>
+      
+      <div class="config-controls">
+        <label>
+          Width: 
+          <input type="range" min="10" max="100" [value]="pendingWidth()" 
+                 (input)="updateCanvasWidth($event)">
+          <span>{{ pendingWidth() }}</span>
+        </label>
+        
+        <label>
+          Height: 
+          <input type="range" min="10" max="100" [value]="pendingHeight()" 
+                 (input)="updateCanvasHeight($event)">
+          <span>{{ pendingHeight() }}</span>
+        </label>
+        
+        <label>
+          Group Size: 
+          <input type="range" min="5" max="25" [value]="pendingGroupSize()" 
+                 (input)="updatePixelGroupSize($event)">
+          <span>{{ pendingGroupSize() }}</span>
+        </label>
+        
+        <button (click)="applyConfiguration()" 
+                class="apply-config" 
+                [disabled]="!hasConfigChanges()">
+          Apply Configuration
+        </button>
+      </div>
+    </div>
+  </header>
+  
+  <main>
+    @if (isClassicMode) {
+      <div class="demo-section">
+        <h2>Source Canvas (Classic)</h2>
+        <app-source-image-canvas></app-source-image-canvas>
+      </div>
+      
+      <div class="demo-section">
+        <h2>Pixel Grid (Classic)</h2>
+        <app-pixel-grid></app-pixel-grid>
+      </div>
+    }
+    
+    @if (isSignalsMode) {
+      <div class="demo-section">
+        <h2>Source Canvas (Signals)</h2>
+        <app-signal-source-image-canvas></app-signal-source-image-canvas>
+      </div>
+      
+      <div class="demo-section">
+        <h2>Pixel Grid (Signals)</h2>
+        <app-signal-pixel-grid></app-signal-pixel-grid>
+      </div>
+    }
+  </main>
+</div>

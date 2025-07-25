@@ -1,0 +1,4 @@
+<div class="pixel-row">
+  <app-pixel-group *ngFor="let group of groups; trackBy: trackGroup" 
+                   [rowIndex]="rowIndex" [groupIndex]="group.groupIndex"></app-pixel-group>
+</div>

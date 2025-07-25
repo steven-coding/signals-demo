@@ -1,0 +1,147 @@
+.app-container {
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+h1 {
+  color: #333;
+  margin: 0;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.main-controls {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.config-controls {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  
+  label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    
+    input[type="range"] {
+      width: 100px;
+    }
+    
+    span {
+      min-width: 30px;
+      text-align: center;
+      font-weight: bold;
+      color: #007acc;
+    }
+  }
+}
+
+.mode-toggle,
+.animation-toggle,
+.apply-config {
+  padding: 10px 20px;
+  border: 2px solid #007acc;
+  background-color: #007acc;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #005a9e;
+    border-color: #005a9e;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    border-color: #ccc;
+    cursor: not-allowed;
+    
+    &:hover {
+      background-color: #ccc;
+      border-color: #ccc;
+    }
+  }
+}
+
+.animation-toggle.stopped {
+  background-color: #dc3545;
+  border-color: #dc3545;
+
+  &:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+  }
+}
+
+.apply-config {
+  background-color: #28a745;
+  border-color: #28a745;
+
+  &:hover:not(:disabled) {
+    background-color: #218838;
+    border-color: #218838;
+  }
+}
+
+main {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.demo-section {
+  flex: 1;
+  
+  h2 {
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  // Ensure canvas and pixel grid are vertically aligned and scaled for visibility
+  app-source-image-canvas,
+  app-pixel-grid,
+  app-signal-source-image-canvas,
+  app-signal-pixel-grid {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 10px;
+    
+    // Scale up for visibility while maintaining correct dimensions
+    transform: scale(4);
+    transform-origin: top left;
+    margin-right: 200px; // Add space for scaled content
+    margin-bottom: 200px; // Add space for scaled content
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+  }
+  
+  header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+}
