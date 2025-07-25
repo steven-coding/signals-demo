@@ -125,12 +125,6 @@ main {
     display: inline-block;
     vertical-align: top;
     margin-bottom: 10px;
-    
-    // Scale up for visibility while maintaining correct dimensions
-    transform: scale(4);
-    transform-origin: top left;
-    margin-right: 200px; // Add space for scaled content
-    margin-bottom: 200px; // Add space for scaled content
   }
 }
 

@@ -33,20 +33,15 @@ export class SignalSourceImageCanvasComponent implements OnInit, OnDestroy, Afte
 
   private setupCanvas() {
     const config = this.canvasConfig.config();
-    const dpr = window.devicePixelRatio || 1;
     
     // Set canvas internal resolution accounting for device pixel ratio
-    this.canvas.nativeElement.width = config.width * dpr;
-    this.canvas.nativeElement.height = config.height * dpr;
+    this.canvas.nativeElement.width = config.width;
+    this.canvas.nativeElement.height = config.height;
     
     // Set canvas display size to exact pixel dimensions
     this.canvas.nativeElement.style.width = `${config.width}px`;
     this.canvas.nativeElement.style.height = `${config.height}px`;
     this.canvas.nativeElement.style.imageRendering = 'pixelated';
-    
-    // Reset transform and scale the drawing context to account for device pixel ratio
-    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    this.ctx.scale(dpr, dpr);
   }
 
   private startAnimation() {
