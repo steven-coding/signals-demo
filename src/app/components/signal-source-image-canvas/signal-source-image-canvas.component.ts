@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild, OnInit, OnDestroy, AfterViewInit, inject, ChangeDetectionStrategy, effect } from '@angular/core';
 import { CanvasConfigService } from '../../services/canvas-config.service';
+import { ImageDataService } from '../../services/image-data.service';
 
 @Component({
   selector: 'app-signal-source-image-canvas',
@@ -12,6 +13,7 @@ import { CanvasConfigService } from '../../services/canvas-config.service';
 export class SignalSourceImageCanvasComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
   private canvasConfig = inject(CanvasConfigService);
+  private imageDataService = inject(ImageDataService);
   private ctx!: CanvasRenderingContext2D;
   private animationInterval?: number;
 
@@ -56,13 +58,13 @@ export class SignalSourceImageCanvasComponent implements OnInit, OnDestroy, Afte
   }
 
   private generateAndDrawData() {
-    this.canvasConfig.generateNewPixelStates();
+    this.imageDataService.generateNewImageData();
     this.drawCanvasFromPixelStates();
   }
 
   private drawCanvasFromPixelStates() {
     const config = this.canvasConfig.config();
-    const pixelStates = this.canvasConfig.pixelStates();
+    const pixelStates = this.imageDataService.pixelStates();
     
     // Clear the canvas first
     this.ctx.clearRect(0, 0, config.width, config.height);
