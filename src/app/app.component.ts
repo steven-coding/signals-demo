@@ -24,7 +24,7 @@ import { MODE_TOKEN } from './tokens/mode.token';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [
-    { provide: MODE_TOKEN, useValue: 'classic' }
+    { provide: MODE_TOKEN, useValue: 'classic' } 
   ]
 })
 export class AppComponent implements OnInit {

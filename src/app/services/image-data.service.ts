@@ -2,12 +2,19 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { ImageData } from '../interfaces/image-data.interface';
 import { CanvasConfigService, PixelState } from './canvas-config.service';
+import { DATA_GENERATOR_TOKEN } from '../tokens/data-generator.token';
+
+export interface DataGenerator {
+  generateSampleData(width: number, height: number): ImageData;
+  generateRandomColor(): string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageDataService {
   private canvasConfig = inject(CanvasConfigService);
+  private dataGenerator = inject(DATA_GENERATOR_TOKEN);
   private imageDataSubject = new Subject<ImageData>();
   private imageDataSignal = signal<ImageData>({ data: '' });
 
@@ -45,18 +52,6 @@ export class ImageDataService {
   }
 
   generateSampleData(width: number, height: number): ImageData {
-    const rows = [];
-    for (let y = 0; y < height; y++) {
-      let row = '';
-      for (let x = 0; x < width; x++) {
-        // Generate random hex color
-        const r = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-        const g = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-        const b = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-        row += r + g + b;
-      }
-      rows.push(row);
-    }
-    return { data: rows.join('\n') };
+    return this.dataGenerator.generateSampleData(width, height);
   }
 }

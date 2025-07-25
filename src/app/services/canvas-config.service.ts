@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
+import { DATA_GENERATOR_TOKEN } from '../tokens/data-generator.token';
 
 export interface CanvasConfig {
   width: number;
@@ -16,6 +17,7 @@ export interface PixelState {
   providedIn: 'root'
 })
 export class CanvasConfigService {
+  private dataGenerator = inject(DATA_GENERATOR_TOKEN);
   private configSignal = signal<CanvasConfig>({ width: 50, height: 50, groupSize: 10 });
   private pixelStatesSignal = signal<PixelState[]>([]);
   private isAnimatingSignal = signal<boolean>(true);
@@ -35,14 +37,20 @@ export class CanvasConfigService {
 
   private initializePixelStates() {
     const config = this.configSignal();
+    const imageData = this.dataGenerator.generateSampleData(config.width, config.height);
     const states: PixelState[] = [];
     
+    const rows = imageData.data.split('\n');
     for (let y = 0; y < config.height; y++) {
+      const row = rows[y] || '';
       for (let x = 0; x < config.width; x++) {
+        const colorHex = row.substring(x * 6, (x + 1) * 6);
+        const color = colorHex.length === 6 ? `#${colorHex}` : this.dataGenerator.generateRandomColor();
+        
         states.push({
           x,
           y,
-          color: this.generateRandomColor()
+          color
         });
       }
     }
@@ -52,14 +60,20 @@ export class CanvasConfigService {
 
   generateNewPixelStates() {
     const config = this.configSignal();
+    const imageData = this.dataGenerator.generateSampleData(config.width, config.height);
     const states: PixelState[] = [];
     
+    const rows = imageData.data.split('\n');
     for (let y = 0; y < config.height; y++) {
+      const row = rows[y] || '';
       for (let x = 0; x < config.width; x++) {
+        const colorHex = row.substring(x * 6, (x + 1) * 6);
+        const color = colorHex.length === 6 ? `#${colorHex}` : this.dataGenerator.generateRandomColor();
+        
         states.push({
           x,
           y,
-          color: this.generateRandomColor()
+          color
         });
       }
     }
@@ -67,12 +81,6 @@ export class CanvasConfigService {
     this.pixelStatesSignal.set(states);
   }
 
-  private generateRandomColor(): string {
-    const r = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-    const g = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-    const b = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-    return `#${r}${g}${b}`;
-  }
 
   getPixelAtPosition(x: number, y: number): PixelState | undefined {
     const config = this.configSignal();
